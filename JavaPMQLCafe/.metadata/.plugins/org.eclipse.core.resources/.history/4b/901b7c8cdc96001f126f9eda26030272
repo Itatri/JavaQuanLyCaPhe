@@ -1,0 +1,530 @@
+
+package frmQLCafe;
+
+import java.awt.EventQueue;
+import java.awt.Color;
+import java.awt.Font;
+import java.io.Serializable;
+import java.sql.*;
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.table.DefaultTableModel;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class frmQuanLyDatBan extends JFrame implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    private JTextField txtTenKhachHang;
+    private JTextField txtSoDienThoai;
+    private JTextField txtSoBan;
+    private JTextField txtGhiChua;
+    private JTextField txtSoLuongKhach;
+    private JTable tableDanhSachDatBan;
+    private Connection connection;
+    private DefaultTableModel tableModel;
+    private JComboBox<String> cbThoiGian;
+    private JComboBox<String> cbNgay;
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    frmQuanLyDatBan window = new frmQuanLyDatBan();
+                    window.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public frmQuanLyDatBan() {
+        getContentPane().setBackground(Color.WHITE);
+        initialize();
+        connectToDatabase();
+        loadDanhSachDatBan();
+    }
+
+    private void initialize() {
+        setTitle("Form Quản Lý Đặt Bàn");
+        setSize(932, 514);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        getContentPane().setLayout(null);
+
+        JPanel panel = new JPanel();
+        panel.setBounds(0, 0, 918, 51);
+        panel.setLayout(null);
+        panel.setBackground(Color.BLACK);
+        getContentPane().add(panel);
+
+        JLabel lblTitle = new JLabel("ĐẶT BÀN");
+        lblTitle.setForeground(Color.WHITE);
+        lblTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
+        lblTitle.setBounds(347, 10, 102, 31);
+        panel.add(lblTitle);
+
+        JPanel panelThongTinDatBan = new JPanel();
+        panelThongTinDatBan.setBackground(Color.WHITE);
+        panelThongTinDatBan.setLayout(null);
+        panelThongTinDatBan.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.WHITE, new Color(160, 160, 160)), "Thông Tin Đặt Bàn", TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma", Font.BOLD, 12), Color.BLACK));
+        panelThongTinDatBan.setBounds(10, 61, 360, 366);
+        getContentPane().add(panelThongTinDatBan);
+
+        JLabel lblTenKhachHang = new JLabel("Tên khách hàng:");
+        lblTenKhachHang.setForeground(Color.BLACK);
+        lblTenKhachHang.setFont(new Font("Tahoma", Font.BOLD, 12));
+        lblTenKhachHang.setBounds(10, 62, 115, 22);
+        panelThongTinDatBan.add(lblTenKhachHang);
+
+        JLabel lblSoDienThoai = new JLabel("Số điện thoại:");
+        lblSoDienThoai.setForeground(Color.BLACK);
+        lblSoDienThoai.setFont(new Font("Tahoma", Font.BOLD, 12));
+        lblSoDienThoai.setBounds(10, 94, 102, 22);
+        panelThongTinDatBan.add(lblSoDienThoai);
+
+        txtTenKhachHang = new JTextField();
+        txtTenKhachHang.setColumns(10);
+        txtTenKhachHang.setBounds(135, 65, 215, 19);
+        panelThongTinDatBan.add(txtTenKhachHang);
+
+        txtSoDienThoai = new JTextField();
+        txtSoDienThoai.setColumns(10);
+        txtSoDienThoai.setBounds(135, 97, 215, 19);
+        panelThongTinDatBan.add(txtSoDienThoai);
+
+        JLabel lblSoBan = new JLabel("Số bàn:");
+        lblSoBan.setForeground(Color.BLACK);
+        lblSoBan.setFont(new Font("Tahoma", Font.BOLD, 12));
+        lblSoBan.setBounds(10, 126, 102, 22);
+        panelThongTinDatBan.add(lblSoBan);
+
+        txtSoBan = new JTextField();
+        txtSoBan.setColumns(10);
+        txtSoBan.setBounds(135, 129, 109, 19);
+        panelThongTinDatBan.add(txtSoBan);
+
+        JButton btnChonBan = new JButton("Chọn bàn");
+        btnChonBan.setBounds(254, 126, 96, 21);
+        panelThongTinDatBan.add(btnChonBan);
+        btnChonBan.setForeground(Color.WHITE);
+        btnChonBan.setFont(new Font("Tahoma", Font.BOLD, 12));
+        btnChonBan.setBackground(Color.BLACK);
+        btnChonBan.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frmQuanLyMuaBan frm = new frmQuanLyMuaBan(frmQuanLyDatBan.this);
+                frm.setVisible(true);
+            }
+        });
+
+        JLabel lblThoiGian = new JLabel("Thời gian:");
+        lblThoiGian.setForeground(Color.BLACK);
+        lblThoiGian.setFont(new Font("Tahoma", Font.BOLD, 12));
+        lblThoiGian.setBounds(10, 158, 102, 22);
+        panelThongTinDatBan.add(lblThoiGian);
+
+        cbThoiGian = new JComboBox<>();
+        cbThoiGian.setBackground(Color.WHITE);
+        cbThoiGian.setBounds(135, 160, 109, 21);
+        for (int i = 0; i < 24; i++) {
+            cbThoiGian.addItem(String.format("%02d:00", i));
+        }
+        panelThongTinDatBan.add(cbThoiGian);
+
+        JLabel lblNgay = new JLabel("Ngày:");
+        lblNgay.setForeground(Color.BLACK);
+        lblNgay.setFont(new Font("Tahoma", Font.BOLD, 12));
+        lblNgay.setBounds(10, 190, 102, 22);
+        panelThongTinDatBan.add(lblNgay);
+
+        cbNgay = new JComboBox<>();
+        cbNgay.setBackground(Color.WHITE);
+        cbNgay.setBounds(135, 192, 109, 21);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate today = LocalDate.now();
+        LocalDate endOfYear = LocalDate.of(today.getYear(), 12, 31);
+        long daysBetween = ChronoUnit.DAYS.between(today, endOfYear);
+        for (int i = 0; i <= daysBetween; i++) {
+            cbNgay.addItem(today.plusDays(i).format(formatter));
+        }
+        panelThongTinDatBan.add(cbNgay);
+
+        JLabel lblSoLuongKhach = new JLabel("Số lượng khách:");
+        lblSoLuongKhach.setForeground(Color.BLACK);
+        lblSoLuongKhach.setFont(new Font("Tahoma", Font.BOLD, 12));
+        lblSoLuongKhach.setBounds(10, 222, 115, 22);
+        panelThongTinDatBan.add(lblSoLuongKhach);
+
+        txtSoLuongKhach = new JTextField();
+        txtSoLuongKhach.setColumns(10);
+        txtSoLuongKhach.setBounds(135, 222, 109, 19);
+        panelThongTinDatBan.add(txtSoLuongKhach);
+
+        JLabel lblGhiChua = new JLabel("Ghi chú:");
+        lblGhiChua.setForeground(Color.BLACK);
+        lblGhiChua.setFont(new Font("Tahoma", Font.BOLD, 12));
+        lblGhiChua.setBounds(10, 254, 77, 22);
+        panelThongTinDatBan.add(lblGhiChua);
+
+        txtGhiChua = new JTextField();
+        txtGhiChua.setColumns(10);
+        txtGhiChua.setBounds(135, 264, 215, 79);
+        panelThongTinDatBan.add(txtGhiChua);
+
+        JPanel PanelDanhSachDatBan = new JPanel();
+        PanelDanhSachDatBan.setBackground(Color.WHITE);
+        PanelDanhSachDatBan.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.WHITE, new Color(160, 160, 160)), "Danh Sách Đặt Bàn", TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma", Font.BOLD, 12), Color.BLACK));
+        PanelDanhSachDatBan.setBounds(373, 61, 545, 366);
+        getContentPane().add(PanelDanhSachDatBan);
+        PanelDanhSachDatBan.setLayout(null);
+
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(10, 23, 525, 321);
+        PanelDanhSachDatBan.add(scrollPane);
+
+        tableDanhSachDatBan = new JTable();
+        tableDanhSachDatBan.setBackground(new Color(242, 242, 242));
+        scrollPane.setViewportView(tableDanhSachDatBan);
+
+        tableModel = new DefaultTableModel(new Object[]{"Tên Khách Hàng", "Số Điện Thoại", "Số Bàn", "Thời Gian", "Ngày", "Số Lượng Khách", "Ghi Chú"}, 0);
+        tableDanhSachDatBan.setModel(tableModel);
+
+        JButton btnKiemTra = new JButton("Kiểm Tra");
+        btnKiemTra.setBounds(20, 437, 139, 29);
+        getContentPane().add(btnKiemTra);
+        btnKiemTra.setForeground(Color.WHITE);
+        btnKiemTra.setFont(new Font("Tahoma", Font.BOLD, 12));
+        btnKiemTra.setBackground(Color.BLACK);
+
+        btnKiemTra.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String dienThoai = txtSoDienThoai.getText();
+                if (dienThoai.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập số điện thoại.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                int maKhachHang = getMaKhachHang(dienThoai);
+                if (maKhachHang != -1) {
+                    fillCustomerInfo(maKhachHang);
+                } else {
+                    frmQuanLyKhachHang frm = new frmQuanLyKhachHang(frmQuanLyDatBan.this, dienThoai);
+                    frm.setVisible(true);
+                }
+            }
+        });
+
+        JButton btnThem = new JButton("Thêm");
+        btnThem.setBounds(395, 437, 84, 29);
+        getContentPane().add(btnThem);
+        btnThem.setForeground(Color.WHITE);
+        btnThem.setFont(new Font("Tahoma", Font.BOLD, 12));
+        btnThem.setBackground(Color.BLACK);
+
+        btnThem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                datBan();
+            }
+        });
+
+        JButton btnXoa = new JButton("Xóa");
+        btnXoa.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = tableDanhSachDatBan.getSelectedRow();
+                if (selectedRow >= 0) {
+                    String soBan = tableModel.getValueAt(selectedRow, 2).toString();
+                    String thoiGian = tableModel.getValueAt(selectedRow, 3).toString();
+                    String ngay = tableModel.getValueAt(selectedRow, 4).toString();
+
+                    // Additional code to remove from database
+                    try {
+                        String query = "DELETE FROM datcho WHERE MaBan = ? AND ThoiGianDat = ?";
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setInt(1, Integer.parseInt(soBan));
+                        preparedStatement.setString(2, convertToDateTimeFormat(ngay, thoiGian));
+                        preparedStatement.executeUpdate();
+
+                        tableModel.removeRow(selectedRow);
+                        updateBanStatus(Integer.parseInt(soBan), "Trống");
+                        JOptionPane.showMessageDialog(null, "Xóa đặt bàn thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                        JOptionPane.showMessageDialog(null, "Lỗi khi xóa đặt bàn. Vui lòng thử lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+        btnXoa.setForeground(Color.WHITE);
+        btnXoa.setFont(new Font("Tahoma", Font.BOLD, 12));
+        btnXoa.setBackground(Color.BLACK);
+        btnXoa.setBounds(500, 437, 84, 29);
+        getContentPane().add(btnXoa);
+
+        JButton btnSua = new JButton("Sửa");
+        btnSua.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = tableDanhSachDatBan.getSelectedRow();
+                if (selectedRow >= 0) {
+                    suaDatBan(selectedRow);
+                }
+            }
+        });
+        btnSua.setForeground(Color.WHITE);
+        btnSua.setFont(new Font("Tahoma", Font.BOLD, 12));
+        btnSua.setBackground(Color.BLACK);
+        btnSua.setBounds(604, 437, 84, 29);
+        getContentPane().add(btnSua);
+
+        JButton btnLuu = new JButton("Lưu");
+        btnLuu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                datBan();
+            }
+        });
+        btnLuu.setForeground(Color.WHITE);
+        btnLuu.setFont(new Font("Tahoma", Font.BOLD, 12));
+        btnLuu.setBackground(Color.BLACK);
+        btnLuu.setBounds(708, 437, 84, 29);
+        getContentPane().add(btnLuu);
+        
+        JButton btnThoat = new JButton("Thoát ");
+        btnThoat.setForeground(Color.WHITE);
+        btnThoat.setFont(new Font("Tahoma", Font.BOLD, 12));
+        btnThoat.setBackground(Color.BLACK);
+        btnThoat.setBounds(813, 437, 84, 29);
+        getContentPane().add(btnThoat);
+        btnThoat.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn thoát không?", "Xác nhận thoát", JOptionPane.YES_NO_OPTION);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    dispose();
+                }
+            }
+        });
+    }
+
+    private void connectToDatabase() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cafe", "root", "root");
+            System.out.println("Kết nối thành công!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Kết nối thất bại!");
+        }
+    }
+
+    private void loadDanhSachDatBan() {
+        String query = "SELECT kh.Ten, kh.DienThoai, dc.MaBan, dc.ThoiGianDat, dc.SoLuongKhach, dc.GhiChu " +
+                       "FROM datcho dc " +
+                       "JOIN khachhang kh ON dc.MaKhachHang = kh.MaKhachHang";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String tenKhachHang = resultSet.getString("Ten");
+                String dienThoai = resultSet.getString("DienThoai");
+                int maBan = resultSet.getInt("MaBan");
+                String thoiGianDat = resultSet.getString("ThoiGianDat");
+                int soLuongKhach = resultSet.getInt("SoLuongKhach");
+                String ghiChu = resultSet.getString("GhiChu");
+                tableModel.addRow(new Object[]{tenKhachHang, dienThoai, maBan, thoiGianDat, soLuongKhach, ghiChu});
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean isTimeSlotAvailable(String soBan, String thoiGian, String ngay) {
+        String query = "SELECT COUNT(*) FROM datcho WHERE MaBan = ? AND ThoiGianDat = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, Integer.parseInt(soBan));
+            preparedStatement.setString(2, convertToDateTimeFormat(ngay, thoiGian));
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) == 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private int getMaKhachHang(String dienThoai) {
+        String query = "SELECT MaKhachHang FROM khachhang WHERE DienThoai = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, dienThoai);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("MaKhachHang");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    private int addNewCustomer(String tenKhachHang, String dienThoai) {
+        String query = "INSERT INTO khachhang (Ten, DienThoai) VALUES (?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setString(1, tenKhachHang);
+            preparedStatement.setString(2, dienThoai);
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        return generatedKeys.getInt(1);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    private String convertToDateTimeFormat(String ngay, String thoiGian) {
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime dateTime = LocalDateTime.parse(ngay + " " + thoiGian, inputFormatter);
+        return dateTime.format(outputFormatter);
+    }
+
+    private void datBan() {
+        String tenKhachHang = txtTenKhachHang.getText();
+        String dienThoai = txtSoDienThoai.getText();
+        String soBan = txtSoBan.getText();
+        String thoiGian = cbThoiGian.getSelectedItem().toString();
+        String ngay = cbNgay.getSelectedItem().toString();
+        String ghiChu = txtGhiChua.getText();
+        String soLuongKhach = txtSoLuongKhach.getText();
+
+        if (!isTimeSlotAvailable(soBan, thoiGian, ngay)) {
+            JOptionPane.showMessageDialog(null, "Thời gian đặt bàn bị xung đột. Vui lòng chọn thời gian khác.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int maKhachHang = getMaKhachHang(dienThoai);
+        if (maKhachHang == -1) {
+            maKhachHang = addNewCustomer(tenKhachHang, dienThoai);
+        }
+
+        if (maKhachHang == -1) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi thêm khách hàng mới. Vui lòng thử lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Chuyển đổi định dạng ngày giờ
+        String ngayGioDat = convertToDateTimeFormat(ngay, thoiGian);
+
+        // Code to save to database
+        try {
+            String query = "INSERT INTO datcho (MaKhachHang, MaBan, ThoiGianDat, SoLuongKhach, GhiChu) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, maKhachHang);
+            preparedStatement.setInt(2, Integer.parseInt(soBan));
+            preparedStatement.setString(3, ngayGioDat);
+            preparedStatement.setInt(4, Integer.parseInt(soLuongKhach));
+            preparedStatement.setString(5, ghiChu);
+            preparedStatement.executeUpdate();
+
+            tableModel.addRow(new Object[]{tenKhachHang, dienThoai, soBan, thoiGian, ngay, soLuongKhach, ghiChu});
+            updateBanStatus(Integer.parseInt(soBan), "Đã đặt");
+            JOptionPane.showMessageDialog(null, "Đặt bàn thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Lỗi khi đặt bàn. Vui lòng thử lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void suaDatBan(int selectedRow) {
+        String tenKhachHang = txtTenKhachHang.getText();
+        String dienThoai = txtSoDienThoai.getText();
+        String soBan = txtSoBan.getText();
+        String thoiGian = cbThoiGian.getSelectedItem().toString();
+        String ngay = cbNgay.getSelectedItem().toString();
+        String ghiChu = txtGhiChua.getText();
+        String soLuongKhach = txtSoLuongKhach.getText();
+
+        if (!isTimeSlotAvailable(soBan, thoiGian, ngay)) {
+            JOptionPane.showMessageDialog(null, "Thời gian đặt bàn bị xung đột. Vui lòng chọn thời gian khác.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int maKhachHang = getMaKhachHang(dienThoai);
+        if (maKhachHang == -1) {
+            JOptionPane.showMessageDialog(null, "Không tìm thấy khách hàng. Vui lòng kiểm tra lại thông tin.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Chuyển đổi định dạng ngày giờ
+        String ngayGioDat = convertToDateTimeFormat(ngay, thoiGian);
+
+        // Additional code to update database
+        try {
+            String query = "UPDATE datcho SET MaKhachHang = ?, ThoiGianDat = ?, SoLuongKhach = ?, GhiChu = ? WHERE MaBan = ? AND ThoiGianDat = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, maKhachHang);
+            preparedStatement.setString(2, ngayGioDat);
+            preparedStatement.setInt(3, Integer.parseInt(soLuongKhach));
+            preparedStatement.setString(4, ghiChu);
+            preparedStatement.setInt(5, Integer.parseInt(soBan));
+            preparedStatement.setString(6, convertToDateTimeFormat(tableModel.getValueAt(selectedRow, 4).toString(), tableModel.getValueAt(selectedRow, 3).toString()));
+            preparedStatement.executeUpdate();
+
+            tableModel.setValueAt(tenKhachHang, selectedRow, 0);
+            tableModel.setValueAt(dienThoai, selectedRow, 1);
+            tableModel.setValueAt(soBan, selectedRow, 2);
+            tableModel.setValueAt(thoiGian, selectedRow, 3);
+            tableModel.setValueAt(ngay, selectedRow, 4);
+            tableModel.setValueAt(soLuongKhach, selectedRow, 5);
+            tableModel.setValueAt(ghiChu, selectedRow, 6);
+            JOptionPane.showMessageDialog(null, "Sửa đặt bàn thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Lỗi khi sửa đặt bàn. Vui lòng thử lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void setNewCustomerInfo(String tenKhachHang, String dienThoai) {
+        txtTenKhachHang.setText(tenKhachHang);
+        txtSoDienThoai.setText(dienThoai);
+    }
+
+    public void setSelectedBan(String maBan, String tenBan) {
+        txtSoBan.setText(maBan);
+        updateBanStatus(Integer.parseInt(maBan), "Đã đặt");
+    }
+
+    private void fillCustomerInfo(int maKhachHang) {
+        String query = "SELECT Ten, DienThoai FROM khachhang WHERE MaKhachHang = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, maKhachHang);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String tenKhachHang = resultSet.getString("Ten");
+                String dienThoai = resultSet.getString("DienThoai");
+                txtTenKhachHang.setText(tenKhachHang);
+                txtSoDienThoai.setText(dienThoai);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateBanStatus(int maBan, String trangThai) {
+        try {
+            String query = "UPDATE ban SET TrangThai = ? WHERE MaBan = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, trangThai);
+            preparedStatement.setInt(2, maBan);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}

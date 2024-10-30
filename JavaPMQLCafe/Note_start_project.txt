@@ -1,0 +1,2 @@
+- Thêm lại các thư viện connect database mysql từ file jars
+- Khi chạy trên Eclipse chọn đường dẫn đúng thư mục JavaPMQLCafe

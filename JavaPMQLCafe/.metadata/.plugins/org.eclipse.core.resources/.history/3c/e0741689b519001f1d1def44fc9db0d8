@@ -1,0 +1,414 @@
+	package frmQLCafe;
+	
+	import javax.swing.JFrame;
+	import javax.swing.JLabel;
+	//import javax.swing.SwingConstants;
+	import java.awt.EventQueue;
+	import java.io.Serializable;
+	import javax.swing.JPanel;
+	import java.awt.Color;
+	import java.awt.Font;
+	import javax.swing.JTextField;
+	import javax.swing.JButton;
+	import javax.swing.border.TitledBorder;
+
+	
+	import javax.swing.JTable;
+	import javax.swing.JTextArea;
+	
+	
+	
+	import javax.swing.table.DefaultTableModel;
+	
+	import java.sql.*;
+	import java.util.Vector;
+	
+	import javax.swing.JScrollPane;
+
+
+	import java.awt.event.ActionListener;
+	import java.awt.event.ActionEvent;
+	
+	
+	import java.awt.Dimension;
+	
+	
+	import java.awt.Component;
+
+	import javax.swing.event.DocumentEvent;
+	import javax.swing.event.DocumentListener;
+	
+
+
+	import javax.swing.JOptionPane;
+
+	
+	public class frmQuanLyMenu extends JFrame  implements Serializable {
+	
+		 private static final long serialVersionUID = 1L;
+		 
+		 
+		 private JTextField txtTimKiem;
+		 private JTable tableCTDonHang;
+		 private JTextField txtTenKH;
+		 private JTextField txtSoBan;
+		 private JPanel panel_DSSP;
+		 private JTable tableSanPham;
+		 
+		 private static final String URL = "jdbc:mysql://localhost:3306/cafe";
+		    private static final String USER = "root";  // Thay thế bằng tên người dùng MySQL của bạn
+		    private static final String PASSWORD = "";  // Thay thế bằng mật khẩu MySQL của bạn
+	    
+	    public static void main(String[] args) {
+	        EventQueue.invokeLater(new Runnable() {
+	            public void run() {
+	                try {
+	                    frmQuanLyMenu window = new frmQuanLyMenu();
+	                    window.setVisible(true);
+	                } catch (Exception e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	        });
+	    }
+	
+	    
+	    public frmQuanLyMenu() {
+	    	getContentPane().setBackground(new Color(255, 255, 255));
+	        initialize();
+	        loadDataToTable();
+	        loadDataToSanPhamTable();
+	    }
+	
+	    
+	  
+	    private void initialize() {
+	    	
+	    	
+	    	
+	        setTitle("Form Quản Lý Menu"); 
+	        setSize(1130, 780);
+	        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	        getContentPane().setLayout(null);
+	        
+	        JPanel panel = new JPanel();
+	        panel.setLayout(null);
+	        panel.setBackground(Color.BLACK);
+	        panel.setBounds(0, 0, 1116, 51);
+	        getContentPane().add(panel);
+	        
+	        JLabel lblHan = new JLabel("MENU");
+	        lblHan.setForeground(Color.WHITE);
+	        lblHan.setFont(new Font("Tahoma", Font.BOLD, 20));
+	        lblHan.setBounds(531, 10, 67, 31);
+	        panel.add(lblHan);
+	        
+	        JLabel lblNewLabel_1 = new JLabel("Tìm kiếm : ");
+	        lblNewLabel_1.setForeground(Color.BLACK);
+	        lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+	        lblNewLabel_1.setBounds(10, 61, 75, 22);
+	        getContentPane().add(lblNewLabel_1);
+	        
+	        txtTimKiem = new JTextField();
+	        txtTimKiem.setColumns(10);
+	        txtTimKiem.setBounds(77, 64, 237, 19);
+	        getContentPane().add(txtTimKiem);
+	        
+	        JButton btnTimKiem = new JButton("Tìm Kiếm ");
+	        btnTimKiem.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        	}
+	        });
+	        btnTimKiem.setForeground(Color.WHITE);
+	        btnTimKiem.setFont(new Font("Tahoma", Font.BOLD, 12));
+	        btnTimKiem.setBackground(Color.BLACK);
+	        btnTimKiem.setBounds(324, 58, 125, 30);
+	        getContentPane().add(btnTimKiem);
+	        
+	        
+	        
+	        JScrollPane scrollPanePanel_DSSP = new JScrollPane();
+	        scrollPanePanel_DSSP.setBackground(new Color(255, 255, 255));
+	        scrollPanePanel_DSSP.setBorder(new TitledBorder(null, "Danh S\u00E1ch S\u1EA3n Ph\u1EA9m ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+	        scrollPanePanel_DSSP.setBounds(10, 104, 547, 629);
+	        scrollPanePanel_DSSP.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // Đảm bảo thanh cuộn dọc luôn hiển thị
+	        scrollPanePanel_DSSP.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED); // Thiết lập thanh cuộn ngang khi cần
+	        getContentPane().add(scrollPanePanel_DSSP);
+	
+	         panel_DSSP = new JPanel();
+	        panel_DSSP.setBackground(new Color(255, 255, 255));
+	        panel_DSSP.setLayout(null);
+	        panel_DSSP.setPreferredSize(new Dimension(500, 1000)); // Đặt kích thước ưu tiên cho panel_DSSP
+	        scrollPanePanel_DSSP.setViewportView(panel_DSSP);
+	        
+	        JScrollPane scrollPane_DSSP = new JScrollPane();
+	        scrollPane_DSSP.setBounds(0, 0, 518, 707);
+	        panel_DSSP.add(scrollPane_DSSP);
+	        
+	        JPanel panel_CTDH = new JPanel();
+	        panel_CTDH.setBackground(new Color(255, 255, 255));
+	        panel_CTDH.setBorder(new TitledBorder(null, "Chi Tiết Đơn Hàng", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+	        panel_CTDH.setBounds(567, 61, 539, 623);
+	        getContentPane().add(panel_CTDH);
+	        panel_CTDH.setLayout(null);
+	        
+	        JScrollPane scrollPane_CTDH = new JScrollPane();
+	        scrollPane_CTDH.setBounds(10, 21, 519, 380);
+	        panel_CTDH.add(scrollPane_CTDH);
+	        
+	        tableCTDonHang = new JTable();
+	        tableCTDonHang.setBackground(new Color(242, 242, 242));
+	        scrollPane_CTDH.setViewportView(tableCTDonHang);
+	        
+	        JLabel lblNewLabel_1_1 = new JLabel("Tên Khách Hàng : ");
+	        lblNewLabel_1_1.setForeground(Color.BLACK);
+	        lblNewLabel_1_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+	        lblNewLabel_1_1.setBounds(20, 411, 179, 22);
+	        panel_CTDH.add(lblNewLabel_1_1);
+	        
+	        JLabel lblNewLabel_1_1_1 = new JLabel("Số Bàn : ");
+	        lblNewLabel_1_1_1.setForeground(Color.BLACK);
+	        lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+	        lblNewLabel_1_1_1.setBounds(20, 443, 179, 22);
+	        panel_CTDH.add(lblNewLabel_1_1_1);
+	        
+	        JLabel lblNewLabel_1_3 = new JLabel("Tổng Tiền :");
+	        lblNewLabel_1_3.setForeground(Color.BLACK);
+	        lblNewLabel_1_3.setFont(new Font("Tahoma", Font.BOLD, 12));
+	        lblNewLabel_1_3.setBounds(20, 475, 179, 22);
+	        panel_CTDH.add(lblNewLabel_1_3);
+	        
+	        txtTenKH = new JTextField();
+	        txtTenKH.setColumns(10);
+	        txtTenKH.setBounds(249, 414, 277, 19);
+	        panel_CTDH.add(txtTenKH);
+	        
+	        txtSoBan = new JTextField();
+	        txtSoBan.setColumns(10);
+	        txtSoBan.setBounds(249, 446, 277, 19);
+	        panel_CTDH.add(txtSoBan);
+	        
+	        JTextArea textAreaTongTien = new JTextArea();
+	        textAreaTongTien.setBounds(249, 475, 257, 19);
+	        panel_CTDH.add(textAreaTongTien);
+	        
+	        JButton btnXoaTatCaDH = new JButton("Xóa Tất Cả Đơn Hàng");
+	        btnXoaTatCaDH.setForeground(Color.WHITE);
+	        btnXoaTatCaDH.setFont(new Font("Tahoma", Font.BOLD, 12));
+	        btnXoaTatCaDH.setBackground(Color.BLACK);
+	        btnXoaTatCaDH.setBounds(20, 504, 229, 47);
+	        panel_CTDH.add(btnXoaTatCaDH);
+	        
+	        JButton btnThanhToan = new JButton("Thanh Toán ");
+	        btnThanhToan.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        	}
+	        });
+	        btnThanhToan.setForeground(Color.WHITE);
+	        btnThanhToan.setFont(new Font("Tahoma", Font.BOLD, 12));
+	        btnThanhToan.setBackground(Color.BLACK);
+	        btnThanhToan.setBounds(21, 560, 229, 47);
+	        panel_CTDH.add(btnThanhToan);
+	        
+	        JButton btnXoaDonHang = new JButton("Xóa Đơn Hàng");
+	        btnXoaDonHang.setForeground(Color.WHITE);
+	        btnXoaDonHang.setFont(new Font("Tahoma", Font.BOLD, 12));
+	        btnXoaDonHang.setBackground(Color.BLACK);
+	        btnXoaDonHang.setBounds(275, 504, 229, 47);
+	        panel_CTDH.add(btnXoaDonHang);
+	        
+	        JButton btnThemSanPham = new JButton("Thêm Sản Phẩm ");
+	        btnThemSanPham.setForeground(Color.WHITE);
+	        btnThemSanPham.setFont(new Font("Tahoma", Font.BOLD, 12));
+	        btnThemSanPham.setBackground(Color.BLACK);
+	        btnThemSanPham.setBounds(277, 560, 229, 47);
+	        panel_CTDH.add(btnThemSanPham);
+	        
+	     // Tạo tableSanPham và đặt nó vào scrollPane_DSSP
+	        tableSanPham = new JTable();
+	        tableSanPham.setBackground(new Color(242, 242, 242));
+	         scrollPane_DSSP = new JScrollPane(tableSanPham);
+	        scrollPane_DSSP.setBounds(0, 0, 518, 707);
+	        panel_DSSP.add(scrollPane_DSSP);
+	        
+	        JButton btnThoat = 
+	        		new JButton("Thoát ");
+	        btnThoat.setBounds(782, 695, 95, 38);
+	        getContentPane().add(btnThoat);
+	        btnThoat.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	                int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn thoát không?", "Xác nhận thoát", JOptionPane.YES_NO_OPTION);
+	                if (confirm == JOptionPane.YES_OPTION) {
+	                    dispose(); // Đóng cửa sổ hiện tại
+	                }
+	            }
+	        });
+	        btnThoat.setForeground(Color.WHITE);
+	        btnThoat.setFont(new Font("Tahoma", Font.BOLD, 12));
+	        btnThoat.setBackground(Color.BLACK);
+	        btnThemSanPham.addActionListener(e -> openQuanLySanPhamForm());
+	        
+	
+	     // Xử lý sự kiện cho nút tìm kiếm
+	        btnTimKiem.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	                String tuKhoa = txtTimKiem.getText(); // Lấy từ khóa từ JTextField
+	                timKiemSanPham(tuKhoa); // Gọi phương thức tìm kiếm
+	            }
+	        });
+	        
+	        
+	     // Thêm DocumentListener cho txtTimKiem
+	        txtTimKiem.getDocument().addDocumentListener(new DocumentListener() {
+	            @Override
+	            public void insertUpdate(DocumentEvent e) {
+	                // Không cần xử lý insertUpdate
+	            }
+
+	            @Override
+	            public void removeUpdate(DocumentEvent e) {
+	                // Gọi phương thức để hiển thị lại tất cả các sản phẩm
+	                hienThiTatCaSanPham();
+	            }
+
+	            @Override
+	            public void changedUpdate(DocumentEvent e) {
+	                // Không cần xử lý changedUpdate
+	            }
+	        });
+
+	    }
+	    
+	 // Phương thức tìm kiếm sản phẩm
+	    private void timKiemSanPham(String tuKhoa) {
+	        // Duyệt qua tất cả các panel sản phẩm trong panel_DSSP
+	        for (Component comp : panel_DSSP.getComponents()) {
+	            if (comp instanceof JPanel) {
+	                JPanel panelSanPham = (JPanel) comp;
+	                TitledBorder titledBorder = (TitledBorder) panelSanPham.getBorder();
+	                String tenSanPham = titledBorder.getTitle();
+	                
+	                // Kiểm tra nếu tên sản phẩm chứa từ khóa tìm kiếm
+	                if (tenSanPham.toLowerCase().contains(tuKhoa.toLowerCase())) {
+	                    panelSanPham.setVisible(true); // Hiển thị panel sản phẩm nếu tìm thấy
+	                } else {
+	                    panelSanPham.setVisible(false); // Ẩn panel sản phẩm nếu không tìm thấy
+	                }
+	            }
+	        }
+	    }
+	    
+	 // Phương thức hiển thị lại tất cả các sản phẩm
+	    private void hienThiTatCaSanPham() {
+	        for (Component comp : panel_DSSP.getComponents()) {
+	            if (comp instanceof JPanel) {
+	                JPanel panelSanPham = (JPanel) comp;
+	                panelSanPham.setVisible(true); // Hiển thị tất cả các panel sản phẩm
+	            }
+	        }
+	    }
+
+	    
+	    private void loadDataToTable() {
+	        Vector<Vector<Object>> data = getChiTietDonHang();
+	        Vector<String> columnNames = new Vector<>();
+	        columnNames.add("Mã Chi Tiết Đơn Hàng");
+	       // columnNames.add("MaDonHang");
+	        columnNames.add("Mã SP");
+	        columnNames.add("Số Lượng");
+	        columnNames.add("Tổng Tiền");
+	
+	        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+	        tableCTDonHang.setModel(model);
+	    }
+	
+	    private Vector<Vector<Object>> getChiTietDonHang() {
+	        Vector<Vector<Object>> data = new Vector<>();
+	        Connection conn = getConnection();
+	        
+	        if (conn != null) {
+	            try {
+	                Statement stmt = conn.createStatement();
+	                String query = "SELECT MaChiTietDonHang, MaSanPham, SoLuong, TongTienCongLai FROM chitietdonhang";
+	                ResultSet rs = stmt.executeQuery(query);
+	                
+	                while (rs.next()) {
+	                    Vector<Object> row = new Vector<>();
+	                    row.add(rs.getInt("MaChiTietDonHang"));
+	                    //row.add(rs.getInt("MaDonHang"));
+	                    row.add(rs.getInt("MaSanPham"));
+	                    row.add(rs.getInt("SoLuong"));
+	                    row.add(rs.getDouble("TongTienCongLai"));
+	                    data.add(row);
+	                }
+	                
+	                rs.close();
+	                stmt.close();
+	                conn.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        
+	        return data;
+	    }
+	    
+	    private void loadDataToSanPhamTable() {
+	        Vector<Vector<Object>> data = getSanPhamData();
+	        Vector<String> columnNames = new Vector<>();
+	        columnNames.add("MaSanPham");
+	        columnNames.add("Ten");
+	        columnNames.add("Gia");
+	        columnNames.add("LinkSP");
+
+	        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+	        tableSanPham.setModel(model);
+	    }
+
+	    private Vector<Vector<Object>> getSanPhamData() {
+	        Vector<Vector<Object>> data = new Vector<>();
+	        Connection conn = getConnection();
+
+	        if (conn != null) {
+	            try {
+	                Statement stmt = conn.createStatement();
+	                String query = "SELECT MaSanPham, Ten, Gia, LinkSP FROM sanpham";
+	                ResultSet rs = stmt.executeQuery(query);
+
+	                while (rs.next()) {
+	                    Vector<Object> row = new Vector<>();
+	                    row.add(rs.getInt("MaSanPham"));
+	                    row.add(rs.getString("Ten"));
+	                    row.add(rs.getDouble("Gia"));
+	                    row.add(rs.getString("LinkSP"));
+	                    data.add(row);
+	                }
+
+	                rs.close();
+	                stmt.close();
+	                conn.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+
+	        return data;
+	    }
+
+	
+	    private Connection getConnection() {
+	        try {
+	            Class.forName("com.mysql.cj.jdbc.Driver");
+	            return DriverManager.getConnection(URL, USER, PASSWORD);
+	        } catch (ClassNotFoundException | SQLException e) {
+	            e.printStackTrace();
+	            return null;
+	        }
+	    }
+	    
+	    
+	    private void openQuanLySanPhamForm() {
+	        frmQuanLySanPham menuForm = new frmQuanLySanPham();
+	        menuForm.setVisible(true);
+	    }
+	}
