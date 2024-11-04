@@ -17,8 +17,9 @@
 
 
 ### Demo
-- Đăng nhập : <br>  <br>
-![LoginCafe](https://github.com/user-attachments/assets/07fc0ff0-4d88-426e-8746-c8885c58c507)
-- Trang chủ :  <br>  <br>
-![MainformCafe](https://github.com/user-attachments/assets/1268cd60-0dbb-49bb-9104-42dd4e669539)
+
+<p align="center">
+  <img src="https://github.com/thanhtin4401/thanhtin4401/assets/85281544/a65ececb-7042-4a69-b9a6-71381c48b003" alt="giphy" />
+</p>
+
 
