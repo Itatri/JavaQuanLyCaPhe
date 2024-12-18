@@ -4,9 +4,9 @@
 
 ### Các chức năng
 
-- Quản lí thông tin sản phẩm quán
-- Quản lí thông tin hóa đơn quán
-- Xuất hóa đơn bằng nhiều loại file
+- Quản lí thông tin sản phẩm 
+- Quản lí thông tin hóa đơn 
+- Xuất hóa đơn , quét QR chuyển khoản
 
 
 
