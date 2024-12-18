@@ -19,9 +19,7 @@
 -  Fix các form , phát triển tính năng quét QR chuyển khoản
 
 ### Demo
+![DN](https://github.com/user-attachments/assets/e0c55b12-ebf5-48b3-b24d-a66b10b3d457)
 
-<p align="center">
-  <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExdDcxb2g1eDFmYjN3N2w5YjBqYmp4czc1M21vOGpmZXdoZGEwMTViZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/rImtHQZNOj1o5YwtXm/giphy.gif" alt="giphy" />
-</p>
 
 
