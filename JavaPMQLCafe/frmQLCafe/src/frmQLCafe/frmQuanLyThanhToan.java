@@ -63,6 +63,8 @@ public class frmQuanLyThanhToan extends JFrame implements Serializable {
         setSize(900, 700);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
+        setResizable(false); // Không cho phép thay đổi kích thước
+        setLocationRelativeTo(null); // Căn giữa màn hình
 
         JPanel panel = new JPanel();
         panel.setBackground(new Color(0, 0, 0));

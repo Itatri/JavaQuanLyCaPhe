@@ -57,6 +57,8 @@ public class frmQuanLyMuaBan extends JFrame implements Serializable {
         setSize(928, 608);
         getContentPane().setBackground(new Color(255, 255, 255));
         getContentPane().setLayout(null);
+        setResizable(false); // Không cho phép thay đổi kích thước
+        setLocationRelativeTo(null); // Căn giữa màn hình
 
         JPanel headerPanel = new JPanel();
         headerPanel.setBounds(0, 0, 914, 48);

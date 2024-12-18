@@ -74,6 +74,8 @@ public class frmQuanLyMenu extends JFrame implements Serializable {
         setSize(1130, 780);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
+        setResizable(false); // Không cho phép thay đổi kích thước
+        setLocationRelativeTo(null); // Căn giữa màn hình
 
         JPanel panel = new JPanel();
         panel.setLayout(null);

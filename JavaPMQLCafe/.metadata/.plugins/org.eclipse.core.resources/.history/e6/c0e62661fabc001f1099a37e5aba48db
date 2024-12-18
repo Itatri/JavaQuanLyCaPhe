@@ -30,6 +30,8 @@ public class frmQuanLyDatBan extends JFrame implements Serializable {
     private DefaultTableModel tableModel;
     private JComboBox<String> cbThoiGian;
     private JComboBox<String> cbNgay;
+    
+    private JFrame frame;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -52,6 +54,14 @@ public class frmQuanLyDatBan extends JFrame implements Serializable {
     }
 
     private void initialize() {
+    	
+    	  frame = new JFrame();
+          frame.setBounds(100, 100, 993, 678);
+          frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+          frame.getContentPane().setLayout(null);
+      	frame.setResizable(false); // Không cho phép thay đổi kích thước
+  		frame.setLocationRelativeTo(null); // Căn giữa màn hình
+    	
         setTitle("Form Quản Lý Đặt Bàn");
         setSize(932, 514);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -310,7 +320,7 @@ public class frmQuanLyDatBan extends JFrame implements Serializable {
 
     private void connectToDatabase() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("org.mariadb.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cafe", "root", "root");
             System.out.println("Kết nối thành công!");
         } catch (Exception e) {

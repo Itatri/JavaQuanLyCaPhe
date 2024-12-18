@@ -60,6 +60,8 @@ public class frmQuanLySanPham extends JFrame implements Serializable {
         setBounds(100, 100, 803, 569);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
+        setResizable(false); // Không cho phép thay đổi kích thước
+        setLocationRelativeTo(null); // Căn giữa màn hình
 
         JPanel panel = new JPanel();
         panel.setLayout(null);

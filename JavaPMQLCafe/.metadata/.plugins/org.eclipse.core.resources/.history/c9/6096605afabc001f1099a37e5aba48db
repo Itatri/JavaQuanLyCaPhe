@@ -30,6 +30,8 @@ public class frmQuanLyDatBan extends JFrame implements Serializable {
     private DefaultTableModel tableModel;
     private JComboBox<String> cbThoiGian;
     private JComboBox<String> cbNgay;
+    
+    private JFrame frame;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -52,6 +54,11 @@ public class frmQuanLyDatBan extends JFrame implements Serializable {
     }
 
     private void initialize() {
+    	
+    	  frame = new JFrame();      
+      	frame.setResizable(false); // Không cho phép thay đổi kích thước
+  		frame.setLocationRelativeTo(null); // Căn giữa màn hình
+    	
         setTitle("Form Quản Lý Đặt Bàn");
         setSize(932, 514);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -320,7 +327,7 @@ public class frmQuanLyDatBan extends JFrame implements Serializable {
     }
 
     private void loadDanhSachDatBan() {
-        String query = "SELECT kh.Ten, kh.DienThoai, dc.MaBan, dc.ThoiGianDat, dc.SoLuongKhach " +
+        String query = "SELECT kh.Ten, kh.DienThoai, dc.MaBan, dc.ThoiGianDat, dc.SoLuongKhach, dc.GhiChu " +
                        "FROM datcho dc " +
                        "JOIN khachhang kh ON dc.MaKhachHang = kh.MaKhachHang";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {

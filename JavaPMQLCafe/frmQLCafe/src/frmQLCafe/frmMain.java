@@ -43,6 +43,8 @@ public class frmMain {
         frame.setBounds(100, 100, 993, 678);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
+    	frame.setResizable(false); // Không cho phép thay đổi kích thước
+		frame.setLocationRelativeTo(null); // Căn giữa màn hình
 
         JPanel panel = new JPanel();
         panel.setBackground(new Color(255, 255, 255));

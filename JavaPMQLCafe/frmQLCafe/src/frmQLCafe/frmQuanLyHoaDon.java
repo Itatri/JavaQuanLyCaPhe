@@ -38,6 +38,8 @@ public class frmQuanLyHoaDon extends JFrame implements Serializable, Printable {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         getContentPane().setLayout(new BorderLayout());
+        setResizable(false); // Không cho phép thay đổi kích thước
+        setLocationRelativeTo(null); // Căn giữa màn hình
 
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout(FlowLayout.CENTER));
