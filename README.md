@@ -4,8 +4,8 @@
 
 ### Các chức năng
 
-- Quản lí thông tin sản phẩm , hóa đơn
-- Quản lí thông tin nhân viên, doanh thu 
+- Quản lí thông tin sản phẩm , đặt bàn, hóa đơn
+- Quản lí thông tin nhân viên, doanh thu, kho  
 - Xuất hóa đơn , quét QR chuyển khoản
 
 
@@ -17,7 +17,9 @@
 
 
 ### Demo
+
 - Đăng nhập : <br>  <br>
+
 ![DN](https://github.com/user-attachments/assets/e0c55b12-ebf5-48b3-b24d-a66b10b3d457)
 
 - Trang chủ : <br>  <br>
