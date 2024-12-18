@@ -6,7 +6,7 @@
 
 - Quản lí thông tin sản phẩm , đặt bàn, hóa đơn
 - Quản lí thông tin nhân viên, doanh thu, kho  
-- Xuất hóa đơn , quét QR chuyển khoản
+- Xuất file hóa đơn , quét QR chuyển khoản
 
 
 
