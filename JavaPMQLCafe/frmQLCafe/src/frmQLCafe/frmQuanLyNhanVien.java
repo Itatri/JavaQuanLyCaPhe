@@ -93,6 +93,8 @@ public class frmQuanLyNhanVien extends JFrame implements Serializable {
         setSize(1076, 659);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
+        setResizable(false); // Không cho phép thay đổi kích thước
+        setLocationRelativeTo(null); // Căn giữa màn hình
 
         JPanel panel_1 = new JPanel();
         panel_1.setBackground(new Color(255, 255, 255));

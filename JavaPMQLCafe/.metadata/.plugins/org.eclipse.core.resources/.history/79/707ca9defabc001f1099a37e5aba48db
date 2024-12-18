@@ -43,7 +43,7 @@ public class frmQuanLyDoanhThu extends JFrame implements Serializable, Printable
 
     private static final String URL = "jdbc:mariadb://localhost:3306/cafe";
     private static final String USER = "root";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "root";
     
     
     
@@ -75,6 +75,8 @@ public class frmQuanLyDoanhThu extends JFrame implements Serializable, Printable
     }
 
     private void initialize() {
+    	
+    	
     	
         setBounds(100, 100, 954, 467);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

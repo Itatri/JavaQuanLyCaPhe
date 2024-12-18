@@ -76,13 +76,12 @@ public class frmQuanLyDoanhThu extends JFrame implements Serializable, Printable
 
     private void initialize() {
     	
-    	
+    	 setResizable(false); // Không cho phép thay đổi kích thước
+         setLocationRelativeTo(null); // Căn giữa màn hình
     	
         setBounds(100, 100, 954, 467);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
-        setResizable(false); // Không cho phép thay đổi kích thước
-        setLocationRelativeTo(null); // Căn giữa màn hình
 
         JPanel panel = new JPanel();
         panel.setLayout(null);

@@ -58,6 +58,8 @@ public class frmQuanLyKhoHang extends JFrame implements Serializable {
         setSize(707, 593);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
+        setResizable(false); // Không cho phép thay đổi kích thước
+        setLocationRelativeTo(null); // Căn giữa màn hình
 
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, 693, 51);

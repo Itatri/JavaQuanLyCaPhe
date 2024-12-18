@@ -70,6 +70,8 @@ public class frmQuanLyKhachHang extends JFrame {
         setBounds(100, 100, 600, 481);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
+        setResizable(false); // Không cho phép thay đổi kích thước
+        setLocationRelativeTo(null); // Căn giữa màn hình
 
         JLabel lblTenKhachHang = new JLabel("Tên Khách Hàng");
         lblTenKhachHang.setBounds(10, 56, 100, 14);

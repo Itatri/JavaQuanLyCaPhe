@@ -30,6 +30,8 @@ public class frmQuanLyDatBan extends JFrame implements Serializable {
     private DefaultTableModel tableModel;
     private JComboBox<String> cbThoiGian;
     private JComboBox<String> cbNgay;
+    
+    private JFrame frame;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -52,6 +54,9 @@ public class frmQuanLyDatBan extends JFrame implements Serializable {
     }
 
     private void initialize() {
+    	
+    	
+    	
         setTitle("Form Quản Lý Đặt Bàn");
         setSize(932, 514);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

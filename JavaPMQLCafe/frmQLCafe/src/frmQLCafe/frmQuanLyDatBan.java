@@ -1,4 +1,3 @@
-
 package frmQLCafe;
 
 import java.awt.EventQueue;
@@ -30,6 +29,7 @@ public class frmQuanLyDatBan extends JFrame implements Serializable {
     private DefaultTableModel tableModel;
     private JComboBox<String> cbThoiGian;
     private JComboBox<String> cbNgay;
+    
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -52,9 +52,14 @@ public class frmQuanLyDatBan extends JFrame implements Serializable {
     }
 
     private void initialize() {
+    	
+    	
+    	
         setTitle("Form Quản Lý Đặt Bàn");
         setSize(932, 514);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setResizable(false); // Không cho phép thay đổi kích thước
+        setLocationRelativeTo(null); // Căn giữa màn hình
         getContentPane().setLayout(null);
 
         JPanel panel = new JPanel();

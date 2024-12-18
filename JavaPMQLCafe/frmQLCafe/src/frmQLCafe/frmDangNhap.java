@@ -21,7 +21,10 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
-
+/**
+ * 
+ * @author Admin
+ */
 public class frmDangNhap {
 
 	private JFrame frame;
@@ -60,6 +63,8 @@ public class frmDangNhap {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 741, 445);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false); // Không cho phép thay đổi kích thước
+		frame.setLocationRelativeTo(null); // Căn giữa màn hình
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
