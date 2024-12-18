@@ -61,7 +61,7 @@ public class frmQuanLyThanhToan extends JFrame implements Serializable {
 
     private void initialize() {
         setTitle("Form Quản Lý Thanh Toán");
-        setSize(1032, 700);
+        setSize(900, 700);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
         setResizable(false); // Không cho phép thay đổi kích thước
@@ -69,7 +69,7 @@ public class frmQuanLyThanhToan extends JFrame implements Serializable {
 
         JPanel panel = new JPanel();
         panel.setBackground(new Color(0, 0, 0));
-        panel.setBounds(0, 0, 1016, 51);
+        panel.setBounds(0, 0, 880, 51);
         getContentPane().add(panel);
         panel.setLayout(null);
 
@@ -81,14 +81,14 @@ public class frmQuanLyThanhToan extends JFrame implements Serializable {
 
         JPanel panel_1 = new JPanel();
         panel_1.setBackground(new Color(255, 255, 255));
-        panel_1.setBounds(0, 50, 1016, 600);
+        panel_1.setBounds(0, 50, 880, 600);
         getContentPane().add(panel_1);
         panel_1.setLayout(null);
 
         JPanel panel_2 = new JPanel();
         panel_2.setBackground(new Color(255, 255, 255));
         panel_2.setBorder(new TitledBorder(null, "Chi Tiết Thanh Toán", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        panel_2.setBounds(0, 0, 1016, 276);
+        panel_2.setBounds(0, 0, 880, 276);
         panel_1.add(panel_2);
         panel_2.setLayout(null);
 
@@ -101,7 +101,7 @@ public class frmQuanLyThanhToan extends JFrame implements Serializable {
         );
         table.setModel(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(10, 22, 996, 244);
+        scrollPane.setBounds(10, 22, 860, 244);
         panel_2.add(scrollPane);
 
         JLabel lblSoBan = new JLabel("Số Bàn:");
@@ -194,42 +194,42 @@ public class frmQuanLyThanhToan extends JFrame implements Serializable {
         btnXacNhanTT.setForeground(new Color(255, 255, 255));
         btnXacNhanTT.setBackground(new Color(34, 139, 34)); // Change color to green
         btnXacNhanTT.setFont(new Font("Tahoma", Font.BOLD, 12));
-        btnXacNhanTT.setBounds(10, 548, 220, 29);
+        btnXacNhanTT.setBounds(10, 522, 220, 29);
         panel_1.add(btnXacNhanTT);
 
         JButton btnHuy = new JButton("Hủy");
         btnHuy.setForeground(new Color(255, 255, 255));
         btnHuy.setBackground(new Color(220, 20, 60)); // Change color to red
         btnHuy.setFont(new Font("Tahoma", Font.BOLD, 12));
-        btnHuy.setBounds(240, 548, 100, 29);
+        btnHuy.setBounds(240, 522, 100, 29);
         panel_1.add(btnHuy);
 
         JButton btnInHoaDon = new JButton("In Hóa Đơn");
         btnInHoaDon.setForeground(new Color(255, 255, 255));
         btnInHoaDon.setBackground(new Color(0, 0, 0));
         btnInHoaDon.setFont(new Font("Tahoma", Font.BOLD, 12));
-        btnInHoaDon.setBounds(670, 548, 100, 29);
+        btnInHoaDon.setBounds(670, 522, 100, 29);
         panel_1.add(btnInHoaDon);
 
         JButton btnCheckCustomer = new JButton("Kiểm Tra Khách Hàng");
         btnCheckCustomer.setForeground(new Color(255, 255, 255));
         btnCheckCustomer.setBackground(new Color(70, 130, 180)); // Change color to steel blue
         btnCheckCustomer.setFont(new Font("Tahoma", Font.BOLD, 12));
-        btnCheckCustomer.setBounds(480, 548, 180, 29);
+        btnCheckCustomer.setBounds(480, 522, 180, 29);
         panel_1.add(btnCheckCustomer);
 
         JButton btnQuayLai = new JButton("Quay Lại");
         btnQuayLai.setForeground(new Color(255, 255, 255));
         btnQuayLai.setBackground(new Color(255, 165, 0)); // Change color to orange
         btnQuayLai.setFont(new Font("Tahoma", Font.BOLD, 12));
-        btnQuayLai.setBounds(350, 548, 120, 29);
+        btnQuayLai.setBounds(350, 522, 120, 29);
         panel_1.add(btnQuayLai);
         
         JButton btnThoat = new JButton("Thoát ");
         btnThoat.setForeground(Color.WHITE);
         btnThoat.setFont(new Font("Tahoma", Font.BOLD, 12));
         btnThoat.setBackground(Color.BLACK);
-        btnThoat.setBounds(805, 548, 95, 29);
+        btnThoat.setBounds(775, 561, 95, 29);
         panel_1.add(btnThoat);
         btnThoat.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -285,19 +285,13 @@ public class frmQuanLyThanhToan extends JFrame implements Serializable {
         });
 
         qrPanel = new JPanel();
-        qrPanel.setBounds(792, 300, 200, 200);
+        qrPanel.setBounds(780, 318, 200, 200);
         qrPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         qrPanel.setVisible(false);
         panel_1.add(qrPanel);
 
         qrLabel = new JLabel();
         qrPanel.add(qrLabel);
-        
-        JLabel lblQrChuynKhon = new JLabel("QR Chuyển Khoản");
-        lblQrChuynKhon.setForeground(Color.BLACK);
-        lblQrChuynKhon.setFont(new Font("Tahoma", Font.BOLD, 12));
-        lblQrChuynKhon.setBounds(839, 511, 111, 22);
-        panel_1.add(lblQrChuynKhon);
     }
 
     private void connectToDatabase() {
