@@ -76,7 +76,7 @@ public class frmQuanLyThanhToan extends JFrame implements Serializable {
         JLabel lblNewLabel = new JLabel("THANH TOÁN");
         lblNewLabel.setForeground(new Color(255, 255, 255));
         lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-        lblNewLabel.setBounds(445, 11, 138, 31);
+        lblNewLabel.setBounds(433, 11, 138, 31);
         panel.add(lblNewLabel);
 
         JPanel panel_1 = new JPanel();
