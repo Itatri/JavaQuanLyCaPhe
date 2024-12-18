@@ -15,8 +15,6 @@
 - MySQL ( phpMyAdmin )
 - Java Swing ( Eclipse )
 
-### Phát triển 
--  Fix các form , phát triển tính năng quét QR chuyển khoản
 
 ### Demo
 ![DN](https://github.com/user-attachments/assets/e0c55b12-ebf5-48b3-b24d-a66b10b3d457)
