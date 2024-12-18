@@ -107,11 +107,11 @@ public class frmMain {
                                 btnDatBan.setBackground(new Color(255, 255, 255));
                                 btnDatBan.setFont(new Font("Tahoma", Font.BOLD, 12));
                                 
-                                     JButton btnThanhToan = new JButton("Thanh toán ");
-                                        btnThanhToan.setBounds(403, 46, 131, 43);
-                                        panel_2.add(btnThanhToan);
-                                        btnThanhToan.setBackground(new Color(255, 255, 255));
-                                        btnThanhToan.setFont(new Font("Tahoma", Font.BOLD, 12));
+//                                        JButton btnThanhToan = new JButton("Thanh toán ");
+//                                        btnThanhToan.setBounds(403, 46, 131, 43);
+//                                        panel_2.add(btnThanhToan);
+//                                        btnThanhToan.setBackground(new Color(255, 255, 255));
+//                                        btnThanhToan.setFont(new Font("Tahoma", Font.BOLD, 12));
                                         
                                                 JButton btnNhanVien = new JButton("Nhân viên ");
                                                 btnNhanVien.setBounds(35, 155, 131, 43);
@@ -121,13 +121,13 @@ public class frmMain {
                                                 
 
                                                 JButton btnKhoHang = new JButton("Kho hàng ");
-                                                btnKhoHang.setBounds(218, 155, 131, 43);
+                                                btnKhoHang.setBounds(403, 155, 131, 43);
                                                 panel_2.add(btnKhoHang);
                                                 btnKhoHang.setBackground(new Color(255, 255, 255));
                                                 btnKhoHang.setFont(new Font("Tahoma", Font.BOLD, 12));
                                                 
                                                 JButton btnHoaDon = new JButton("Hóa đơn ");
-                                                btnHoaDon.setBounds(403, 155, 131, 43);
+                                                btnHoaDon.setBounds(403, 46, 131, 43);
                                                 panel_2.add(btnHoaDon);
                                                 btnHoaDon.setFont(new Font("Tahoma", Font.BOLD, 12));
                                                 btnHoaDon.setBackground(Color.WHITE);
@@ -156,7 +156,7 @@ public class frmMain {
                                                 btnHoaDon.addActionListener(e -> openQuanLyHoaDonForm());
                                                 btnKhoHang.addActionListener(e -> openQuanLyKhoHangForm());
                                                 btnNhanVien.addActionListener(e -> openQuanLyNhanVienForm());
-                                        btnThanhToan.addActionListener(e -> openQuanLyThanhToanForm());
+//                                        btnThanhToan.addActionListener(e -> openQuanLyThanhToanForm());
                                 btnDatBan.addActionListener(e -> openQuanLyDatBanForm());
                         btnMenu.addActionListener(e -> openQuanLyMenuForm());
                 

@@ -194,42 +194,42 @@ public class frmQuanLyThanhToan extends JFrame implements Serializable {
         btnXacNhanTT.setForeground(new Color(255, 255, 255));
         btnXacNhanTT.setBackground(new Color(34, 139, 34)); // Change color to green
         btnXacNhanTT.setFont(new Font("Tahoma", Font.BOLD, 12));
-        btnXacNhanTT.setBounds(10, 548, 220, 29);
+        btnXacNhanTT.setBounds(10, 542, 220, 29);
         panel_1.add(btnXacNhanTT);
 
         JButton btnHuy = new JButton("Hủy");
         btnHuy.setForeground(new Color(255, 255, 255));
         btnHuy.setBackground(new Color(220, 20, 60)); // Change color to red
         btnHuy.setFont(new Font("Tahoma", Font.BOLD, 12));
-        btnHuy.setBounds(240, 548, 100, 29);
+        btnHuy.setBounds(240, 542, 100, 29);
         panel_1.add(btnHuy);
 
         JButton btnInHoaDon = new JButton("In Hóa Đơn");
         btnInHoaDon.setForeground(new Color(255, 255, 255));
         btnInHoaDon.setBackground(new Color(0, 0, 0));
         btnInHoaDon.setFont(new Font("Tahoma", Font.BOLD, 12));
-        btnInHoaDon.setBounds(670, 548, 100, 29);
+        btnInHoaDon.setBounds(670, 542, 100, 29);
         panel_1.add(btnInHoaDon);
 
         JButton btnCheckCustomer = new JButton("Kiểm Tra Khách Hàng");
         btnCheckCustomer.setForeground(new Color(255, 255, 255));
         btnCheckCustomer.setBackground(new Color(70, 130, 180)); // Change color to steel blue
         btnCheckCustomer.setFont(new Font("Tahoma", Font.BOLD, 12));
-        btnCheckCustomer.setBounds(480, 548, 180, 29);
+        btnCheckCustomer.setBounds(480, 542, 180, 29);
         panel_1.add(btnCheckCustomer);
 
         JButton btnQuayLai = new JButton("Quay Lại");
         btnQuayLai.setForeground(new Color(255, 255, 255));
         btnQuayLai.setBackground(new Color(255, 165, 0)); // Change color to orange
         btnQuayLai.setFont(new Font("Tahoma", Font.BOLD, 12));
-        btnQuayLai.setBounds(350, 548, 120, 29);
+        btnQuayLai.setBounds(350, 542, 120, 29);
         panel_1.add(btnQuayLai);
         
         JButton btnThoat = new JButton("Thoát ");
         btnThoat.setForeground(Color.WHITE);
         btnThoat.setFont(new Font("Tahoma", Font.BOLD, 12));
         btnThoat.setBackground(Color.BLACK);
-        btnThoat.setBounds(805, 548, 95, 29);
+        btnThoat.setBounds(780, 542, 95, 29);
         panel_1.add(btnThoat);
         btnThoat.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -285,19 +285,13 @@ public class frmQuanLyThanhToan extends JFrame implements Serializable {
         });
 
         qrPanel = new JPanel();
-        qrPanel.setBounds(792, 300, 200, 200);
+        qrPanel.setBounds(780, 318, 200, 200);
         qrPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         qrPanel.setVisible(false);
         panel_1.add(qrPanel);
 
         qrLabel = new JLabel();
         qrPanel.add(qrLabel);
-        
-        JLabel lblQrChuynKhon = new JLabel("QR Chuyển Khoản");
-        lblQrChuynKhon.setForeground(Color.BLACK);
-        lblQrChuynKhon.setFont(new Font("Tahoma", Font.BOLD, 12));
-        lblQrChuynKhon.setBounds(839, 511, 111, 22);
-        panel_1.add(lblQrChuynKhon);
     }
 
     private void connectToDatabase() {

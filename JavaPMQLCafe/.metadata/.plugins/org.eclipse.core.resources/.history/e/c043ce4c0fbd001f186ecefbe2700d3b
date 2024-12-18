@@ -107,7 +107,7 @@ public class frmMain {
                                 btnDatBan.setBackground(new Color(255, 255, 255));
                                 btnDatBan.setFont(new Font("Tahoma", Font.BOLD, 12));
                                 
-                                     JButton btnThanhToan = new JButton("Thanh toán ");
+                                        JButton btnThanhToan = new JButton("Thanh toán ");
                                         btnThanhToan.setBounds(403, 46, 131, 43);
                                         panel_2.add(btnThanhToan);
                                         btnThanhToan.setBackground(new Color(255, 255, 255));
