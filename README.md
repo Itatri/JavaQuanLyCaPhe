@@ -2,7 +2,7 @@
 ## Đồ án môn học Java : Form Java Swing ứng dụng quản lý quán Cafe 
 
 
-### Các chức năng
+### Functions
 
 - Quản lí thông tin sản phẩm , đặt bàn, hóa đơn
 - Quản lí thông tin nhân viên, doanh thu, kho  
@@ -10,7 +10,7 @@
 
 
 
-### Công nghệ
+### Tech
 
 - MySQL ( phpMyAdmin )
 - Java Swing ( Eclipse )
