@@ -16,12 +16,3 @@
 - Java Swing ( Eclipse )
 
 
-### Demo
-
-- Đăng nhập : <br>  <br>
-
-![DN](https://github.com/user-attachments/assets/e0c55b12-ebf5-48b3-b24d-a66b10b3d457)
-
-- Trang chủ : <br>  <br>
-
-![TC](https://github.com/user-attachments/assets/e5c6b4fb-0030-4bc5-adb9-675acdab88fc)
