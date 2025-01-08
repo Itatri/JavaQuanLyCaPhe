@@ -1,5 +1,5 @@
 
-## Đồ án Java : Ứng dụng quản lý quán Cafe 
+## Đồ án Java : Phần mềm quản lý quán Cafe 
 
 
 ### Functions
