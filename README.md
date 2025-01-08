@@ -2,7 +2,7 @@
 ## Đồ án Java : Phần mềm quản lý quán Cafe 
 
 
-### Functions
+### Chức năng
 
 - Quản lí thông tin sản phẩm , đặt bàn, hóa đơn
 - Quản lí thông tin nhân viên, doanh thu, kho  
@@ -10,7 +10,7 @@
 
 
 
-### Tech
+### Công nghệ
 
 - MySQL ( phpMyAdmin )
 - Java Swing ( Eclipse )
