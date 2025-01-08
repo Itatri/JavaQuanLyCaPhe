@@ -1,5 +1,5 @@
 
-## Đồ án Java : Form Java Swing ứng dụng quản lý quán Cafe 
+## Đồ án Java : Ứng dụng quản lý quán Cafe 
 
 
 ### Functions
