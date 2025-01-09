@@ -1,18 +1,15 @@
-
-## Đồ án Java : Phần mềm quản lý quán Cafe 
-
-
-### Chức năng
-
-- Quản lí thông tin sản phẩm , đặt bàn, hóa đơn
-- Quản lí thông tin nhân viên, doanh thu, kho  
-- Xuất file hóa đơn , quét QR chuyển khoản
+## Java project: Cafe management software 
 
 
+### Function
 
-### Công nghệ
+- Manage product information, table reservations, and invoices
+- Manage employee information, revenue, and warehouse  
+- Export invoice file, scan QR to transfer money
+
+
+
+### Technology
 
 - MySQL ( phpMyAdmin )
-- Java Swing ( Eclipse )
-
-
+- Java Swing (Eclipse)
