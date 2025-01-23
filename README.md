@@ -18,5 +18,8 @@
 
  <details>
     <summary>Login</summary>
-    <img loading="lazy" src="https://github.com/user-attachments/assets/7575fa02-aca2-4cec-b8a1-f5f74c4c9eca">
+    <div align="center">
+      <img loading="lazy" src="https://github.com/user-attachments/assets/7575fa02-aca2-4cec-b8a1-f5f74c4c9eca">
+    </div>
+    
   </details>
