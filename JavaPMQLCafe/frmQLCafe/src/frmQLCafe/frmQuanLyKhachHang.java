@@ -27,10 +27,7 @@ public class frmQuanLyKhachHang extends JFrame {
     private JTextField txtTenKhachHang;
     private JTextField txtSoDienThoai;
     private DefaultTableModel tableModel;
-    private static final String URL = "jdbc:mariadb://localhost:3306/cafe";
-    private static final String USER = "root";
-    private static final String PASSWORD = "root";
-    private Object parent; // Thêm đối tượng parent (dùng Object thay vì frmQuanLyDatBan để tránh lỗi undefined)
+    private Object parent;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -157,20 +154,19 @@ public class frmQuanLyKhachHang extends JFrame {
                     JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin khách hàng.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 } else {
                     try {
-                        Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                        Connection conn = DatabaseConnection.getConnection();
                         String query = "INSERT INTO khachhang (Ten, DienThoai) VALUES (?, ?)";
                         PreparedStatement pstmt = conn.prepareStatement(query);
                         pstmt.setString(1, tenKH);
                         pstmt.setString(2, sdt);
                         pstmt.executeUpdate();
-                        conn.close();
                         loadData();
                         if (parent instanceof frmQuanLyDatBan) {
-                            ((frmQuanLyDatBan) parent).setNewCustomerInfo(tenKH, sdt); // Cập nhật thông tin khách hàng mới vào form chính
+                            ((frmQuanLyDatBan) parent).setNewCustomerInfo(tenKH, sdt);
                         } else if (parent instanceof frmQuanLyThanhToan) {
-                            ((frmQuanLyThanhToan) parent).setNewCustomerInfo(tenKH, sdt); // Cập nhật thông tin khách hàng mới vào form chính
+                            ((frmQuanLyThanhToan) parent).setNewCustomerInfo(tenKH, sdt);
                         }
-                        dispose(); // Đóng form này sau khi thêm khách hàng
+                        dispose();
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -189,19 +185,18 @@ public class frmQuanLyKhachHang extends JFrame {
                         JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin khách hàng.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     } else {
                         try {
-                            Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                            Connection conn = DatabaseConnection.getConnection();
                             String query = "UPDATE khachhang SET Ten = ?, DienThoai = ? WHERE MaKhachHang = ?";
                             PreparedStatement pstmt = conn.prepareStatement(query);
                             pstmt.setString(1, tenKH);
                             pstmt.setString(2, sdt);
                             pstmt.setString(3, maKH);
                             pstmt.executeUpdate();
-                            conn.close();
                             loadData();
                             if (parent instanceof frmQuanLyDatBan) {
-                                ((frmQuanLyDatBan) parent).setNewCustomerInfo(tenKH, sdt); // Cập nhật thông tin khách hàng mới vào form chính
+                                ((frmQuanLyDatBan) parent).setNewCustomerInfo(tenKH, sdt);
                             } else if (parent instanceof frmQuanLyThanhToan) {
-                                ((frmQuanLyThanhToan) parent).setNewCustomerInfo(tenKH, sdt); // Cập nhật thông tin khách hàng mới vào form chính
+                                ((frmQuanLyThanhToan) parent).setNewCustomerInfo(tenKH, sdt);
                             }
                         } catch (Exception ex) {
                             ex.printStackTrace();
@@ -219,12 +214,11 @@ public class frmQuanLyKhachHang extends JFrame {
                 if (selectedRow != -1) {
                     String maKH = tableModel.getValueAt(selectedRow, 0).toString();
                     try {
-                        Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                        Connection conn = DatabaseConnection.getConnection();
                         String query = "DELETE FROM khachhang WHERE MaKhachHang = ?";
                         PreparedStatement pstmt = conn.prepareStatement(query);
                         pstmt.setString(1, maKH);
                         pstmt.executeUpdate();
-                        conn.close();
                         loadData();
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -234,22 +228,21 @@ public class frmQuanLyKhachHang extends JFrame {
                 }
             }
         });
-    }
+    } // Add this closing brace for the initialize() method
 
     private void loadData() {
         try {
-            Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            Connection conn = DatabaseConnection.getConnection();
             String query = "SELECT * FROM khachhang";
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
-            tableModel.setRowCount(0); // Clear existing data
+            tableModel.setRowCount(0);
             while (rs.next()) {
                 String maKH = rs.getString("MaKhachHang");
                 String tenKH = rs.getString("Ten");
                 String sdt = rs.getString("DienThoai");
                 tableModel.addRow(new Object[]{maKH, tenKH, sdt});
             }
-            conn.close();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Lỗi kết nối cơ sở dữ liệu: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();

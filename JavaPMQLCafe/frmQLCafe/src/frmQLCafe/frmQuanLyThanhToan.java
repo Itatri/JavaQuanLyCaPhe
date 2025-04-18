@@ -43,6 +43,10 @@ public class frmQuanLyThanhToan extends JFrame implements Serializable {
         });
     }
 
+    private void connectToDatabase() {
+    connection = DatabaseConnection.getConnection();
+    }
+
     public frmQuanLyThanhToan(Vector<Vector<Object>> orderDetails, BigDecimal totalAmount, String maBan, boolean isTakeAway) {
         this.orderDetails = orderDetails;
         this.totalAmount = totalAmount;
@@ -300,16 +304,7 @@ public class frmQuanLyThanhToan extends JFrame implements Serializable {
         panel_1.add(lblQrChuynKhon);
     }
 
-    private void connectToDatabase() {
-        try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cafe", "root", "root");
-            System.out.println("Kết nối thành công!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Kết nối thất bại!");
-        }
-    }
+
 
     private void loadData() {
         String query = "SELECT dh.MaDonHang, kh.Ten AS TenKhachHang, nv.Ten AS TenNhanVien, dh.NgayDatHang, dh.TongTien " +

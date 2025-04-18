@@ -40,10 +40,10 @@ public class frmQuanLyDoanhThu extends JFrame implements Serializable, Printable
     private JTable tableDSDoanhThu;
     JTextArea textAreaTongDoanhThu;
     
-
-    private static final String URL = "jdbc:mariadb://localhost:3306/cafe";
-    private static final String USER = "root";
-    private static final String PASSWORD = "root";
+    // Remove these lines
+    // private static final String URL = "jdbc:mariadb://localhost:3306/cafe";
+    // private static final String USER = "root";
+    // private static final String PASSWORD = "root";
     
     
     
@@ -65,6 +65,10 @@ public class frmQuanLyDoanhThu extends JFrame implements Serializable, Printable
                 }
             }
         });
+    }
+    
+    private Connection getConnection() {
+        return DatabaseConnection.getConnection();
     }
 
     public frmQuanLyDoanhThu() {
@@ -457,12 +461,5 @@ public class frmQuanLyDoanhThu extends JFrame implements Serializable, Printable
 
   
 
-    private Connection getConnection() {
-        try {
-            return DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+    
 }

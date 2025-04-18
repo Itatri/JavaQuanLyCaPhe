@@ -44,6 +44,10 @@ public class frmQuanLyMuaBan extends JFrame implements Serializable {
         loadBanData();
     }
 
+    private void connectToDatabase() {
+        connection = DatabaseConnection.getConnection();
+    }
+
     public frmQuanLyMuaBan(frmQuanLyDatBan parent) {
         this.parent = parent;
         initialize();
@@ -266,16 +270,7 @@ public class frmQuanLyMuaBan extends JFrame implements Serializable {
         });
     }
 
-    private void connectToDatabase() {
-        try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cafe", "root", "root");
-            System.out.println("Kết nối thành công!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Kết nối thất bại!");
-        }
-    }
+   
 
     private void loadBanData() {
         String query = "SELECT MaBan, Ten, TrangThai FROM ban";
