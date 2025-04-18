@@ -30,9 +30,10 @@ public class frmQuanLyKhoHang extends JFrame implements Serializable {
     private JLabel lblSoLuongSanPham;
     private JTextField txtSoLuongMoi;
 
-    private static final String URL = "jdbc:mariadb://localhost:3306/cafe";
-    private static final String USER = "root";
-    private static final String PASSWORD = "root";
+    // Remove these lines
+    // private static final String URL = "jdbc:mariadb://localhost:3306/cafe";
+    // private static final String USER = "root";
+    // private static final String PASSWORD = "root";
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -45,6 +46,10 @@ public class frmQuanLyKhoHang extends JFrame implements Serializable {
                 }
             }
         });
+    }
+
+    private Connection getConnection() {
+    return DatabaseConnection.getConnection();
     }
 
     public frmQuanLyKhoHang() {
@@ -219,14 +224,7 @@ public class frmQuanLyKhoHang extends JFrame implements Serializable {
         }
     }
 
-    private Connection getConnection() {
-        try {
-            return DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+
 
     // Phương thức để thêm sản phẩm mới vào kho hàng
     public void themSanPhamVaoKho(int maSanPham, int soLuong) {

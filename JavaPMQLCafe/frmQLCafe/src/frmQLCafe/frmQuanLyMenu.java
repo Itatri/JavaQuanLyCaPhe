@@ -36,9 +36,10 @@ public class frmQuanLyMenu extends JFrame implements Serializable {
     @SuppressWarnings("unused")
     private boolean isTakeAway;
 
-    private static final String URL = "jdbc:mariadb://localhost:3306/cafe";
-    private static final String USER = "root";
-    private static final String PASSWORD = "root";
+    // Xóa các dòng sau:
+    // private static final String URL = "jdbc:mariadb://localhost:3306/cafe";
+    // private static final String USER = "root";
+    // private static final String PASSWORD = "root";
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -63,6 +64,10 @@ public class frmQuanLyMenu extends JFrame implements Serializable {
         loadSanPhamToScrollPane();
         setOrderDetails();
         calculateAndSetTotal();
+    }
+
+    private Connection getConnection() {
+    return DatabaseConnection.getConnection();
     }
 
     public frmQuanLyMenu() {
@@ -593,15 +598,7 @@ public class frmQuanLyMenu extends JFrame implements Serializable {
         return data;
     }
 
-    private Connection getConnection() {
-        try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            return DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+
 
     class ImageRenderer extends DefaultTableCellRenderer {
         private static final long serialVersionUID = 1L;

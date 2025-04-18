@@ -11,6 +11,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import frmQLCafe.DatabaseConnection;
 
 public class frmQuanLyHoaDon extends JFrame implements Serializable, Printable {
     private static final long serialVersionUID = 1L;
@@ -23,6 +24,10 @@ public class frmQuanLyHoaDon extends JFrame implements Serializable, Printable {
 
     public frmQuanLyHoaDon() {
         this(1); // default maDonHang = 1
+    }
+    
+    private void connectToDatabase() {
+        connection = DatabaseConnection.getConnection();
     }
 
     public frmQuanLyHoaDon(int maDonHang) {
@@ -109,16 +114,7 @@ public class frmQuanLyHoaDon extends JFrame implements Serializable, Printable {
         tableCTHoaDon.setModel(invoiceTableModel);
     }
 
-    private void connectToDatabase() {
-        try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cafe", "root", "root");
-            System.out.println("Kết nối thành công!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Kết nối thất bại!");
-        }
-    }
+   
 
     private void loadData(int maDonHang) {
         String query = "SELECT sp.Ten AS TenMon, kh.Ten AS TenKhachHang, sp.Gia, ct.SoLuong, nv.Ten AS TenNhanVien, dh.PhuongThucThanhToan, dh.NgayDatHang " +

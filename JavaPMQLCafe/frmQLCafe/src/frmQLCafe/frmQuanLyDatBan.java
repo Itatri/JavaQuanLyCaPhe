@@ -43,6 +43,11 @@ public class frmQuanLyDatBan extends JFrame implements Serializable {
             }
         });
     }
+    
+    private void connectToDatabase() {
+        connection = DatabaseConnection.getConnection();
+    }
+
 
     public frmQuanLyDatBan() {
         getContentPane().setBackground(Color.WHITE);
@@ -313,17 +318,7 @@ public class frmQuanLyDatBan extends JFrame implements Serializable {
         });
     }
 
-    private void connectToDatabase() {
-        try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cafe", "root", "root");
-            System.out.println("Kết nối thành công!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Kết nối thất bại!");
-        }
-    }
-
+   
     private void loadDanhSachDatBan() {
         String query = "SELECT kh.Ten, kh.DienThoai, dc.MaBan, dc.ThoiGianDat, dc.SoLuongKhach, dc.GhiChu " +
                        "FROM datcho dc " +

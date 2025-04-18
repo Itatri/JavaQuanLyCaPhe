@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="javax.swing.table.DefaultTableModel"/>
+    <fullyQualifiedTypeName name="frmQLCafe.frmMain"/>
+    <fullyQualifiedTypeName name="frmQLCafe.DatabaseConnection"/>
 </qualifiedTypeNameHistroy>

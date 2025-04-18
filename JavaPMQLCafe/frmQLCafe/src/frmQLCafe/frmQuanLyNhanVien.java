@@ -48,11 +48,13 @@ public class frmQuanLyNhanVien extends JFrame implements Serializable {
     private JTextField txtChucVu;
     private JTable tableDSNV;
     private JTextArea textAreaTongNV;
-
-    private static final String URL = "jdbc:mariadb://localhost:3306/cafe";
-    private static final String USER = "root";
-    private static final String PASSWORD = "root";
     
+
+    // Remove these lines:
+    // private static final String URL = "jdbc:mariadb://localhost:3306/cafe";
+    // private static final String USER = "root";
+    // private static final String PASSWORD = "root";
+
     private int selectedRow = -1;
 
     public static void main(String[] args) {
@@ -78,14 +80,9 @@ public class frmQuanLyNhanVien extends JFrame implements Serializable {
     }
 
     // Kết nối đến cơ sở dữ liệu
+    // Modify the getConnection method:
     private Connection getConnection() {
-        try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            return DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return DatabaseConnection.getConnection();
     }
 
     private void initialize() {

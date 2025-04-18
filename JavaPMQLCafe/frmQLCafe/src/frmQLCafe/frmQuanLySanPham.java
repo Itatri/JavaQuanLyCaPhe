@@ -28,10 +28,11 @@ public class frmQuanLySanPham extends JFrame implements Serializable {
     private JTextField txtTenSanPham;
     private JTextField txtGia;
     private JTable tableSanPham;
-
-    private static final String URL = "jdbc:mariadb://localhost:3306/cafe";
-    private static final String USER = "root"; 
-    private static final String PASSWORD = "root"; 
+    
+    // Remove these lines
+    // private static final String URL = "jdbc:mariadb://localhost:3306/cafe";
+    // private static final String USER = "root"; 
+    // private static final String PASSWORD = "root"; 
 
     private JTextField textFieldImagePath;
     private JTextField txtMaSP;
@@ -248,7 +249,7 @@ public class frmQuanLySanPham extends JFrame implements Serializable {
         model.addColumn("Giá");
         model.addColumn("Link Ảnh");
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM sanpham")) {
 
@@ -275,7 +276,7 @@ public class frmQuanLySanPham extends JFrame implements Serializable {
 
         String sql = "INSERT INTO sanpham (Ten, Gia, LinkSP) VALUES (?, ?, ?)";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             pstmt.setString(1, tenSP);
@@ -286,9 +287,8 @@ public class frmQuanLySanPham extends JFrame implements Serializable {
             ResultSet rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
                 int maSanPhamMoi = rs.getInt(1);
-                // Thêm sản phẩm mới vào kho hàng
                 frmQuanLyKhoHang khoHang = new frmQuanLyKhoHang();
-                khoHang.themSanPhamVaoKho(maSanPhamMoi, 0); // Giả sử thêm 10 sản phẩm mới vào kho
+                khoHang.themSanPhamVaoKho(maSanPhamMoi, 0);
             }
 
             JOptionPane.showMessageDialog(this, "Thêm sản phẩm thành công!");
@@ -307,7 +307,7 @@ public class frmQuanLySanPham extends JFrame implements Serializable {
 
         String sql = "UPDATE sanpham SET Ten = ?, Gia = ?, LinkSP = ? WHERE MaSanPham = ?";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, tenSP);
@@ -328,7 +328,7 @@ public class frmQuanLySanPham extends JFrame implements Serializable {
 
         String sql = "DELETE FROM sanpham WHERE MaSanPham = ?";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setInt(1, maSP);
